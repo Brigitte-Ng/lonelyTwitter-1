@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * Created by yuentung on 9/15/15.
  */
-public abstract class Tweet extends Object implements Tweetable {
+public abstract class Tweet extends Object implements MyObservable, MyObserver {
     private String text;
     private Date date;
     private String currentMood;
@@ -41,5 +41,15 @@ public abstract class Tweet extends Object implements Tweetable {
     }
 
     public abstract Boolean isImportant();
+
+    public void notifyAllObservers(){
+        for (MyObserver observer : observers){
+            observer.myNotify(this);
+        }
+    }
+
+    public void myNotify(MyObservable observable){
+        notifyAllObservers();
+    }
 
 }

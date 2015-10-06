@@ -47,4 +47,24 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
         list.addTweet(tweet2);
         assertEquals(list.getTweets(), list);
     }
+
+    public Boolean weWereNotified;
+
+    public void myNotify(MyObservable observable){
+        weWereNotified = Boolean.TRUE;
+    }
+
+    public void testObservable(){
+        TweetList list = new TweetList();
+        //needs an observer
+        list.addObserver(this);
+        Tweet tweet = new NormalTweet("test");
+        //we should not have gotten notified here
+        list.add(tweet);
+        weWereNotified = Boolean.FALSE;
+        tweet.setText("different text");
+        //we should got notify
+        assertTrue(weWereNotified);
+
+    }
 }
