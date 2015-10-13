@@ -7,12 +7,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +24,10 @@ import android.widget.ListView;
 public class LonelyTwitterActivity extends Activity {
 
 	private static final String FILENAME = "file.sav";
+	private LonelyTwitterActivity activity = this;
 	private EditText bodyText;
 	private ListView oldTweetsList;
+	private Tweet tweet;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -54,6 +59,13 @@ public class LonelyTwitterActivity extends Activity {
 
 			}
 		});
+
+		oldTweetsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(activity, EditTweetActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
@@ -65,6 +77,26 @@ public class LonelyTwitterActivity extends Activity {
 				R.layout.list_item, tweets);//model
 		oldTweetsList.setAdapter(adapter);//controller
 	}
+
+	public Button getSaveButton(){
+		return savedButton;
+	}
+
+	private Button savedButton;
+
+	public EditText getBodyText(){
+		return bodyText;
+	}
+
+	public ListView getOldTweetList(){
+		return oldTweetsList;
+	}
+
+	public Tweet getTweets() {
+		return tweet;
+	}
+
+
 
 	private String[] loadFromFile() {
 		ArrayList<String> tweets = new ArrayList<String>();//model
@@ -102,4 +134,8 @@ public class LonelyTwitterActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+
+
+
+
 }

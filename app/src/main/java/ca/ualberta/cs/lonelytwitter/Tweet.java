@@ -42,7 +42,7 @@ public abstract class Tweet extends Object implements MyObservable, MyObserver {
 
     public abstract Boolean isImportant();
 
-    public void notifyAllObservers(){
+    /*public void notifyAllObservers(){
         for (MyObserver observer : observers){
             observer.myNotify(this);
         }
@@ -50,6 +50,7 @@ public abstract class Tweet extends Object implements MyObservable, MyObserver {
 
     public void myNotify(MyObservable observable){
         notifyAllObservers();
-    }
+    }*/
 
+    public abstract void clear();
 }

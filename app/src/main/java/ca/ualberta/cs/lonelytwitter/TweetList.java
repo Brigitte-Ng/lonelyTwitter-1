@@ -5,14 +5,14 @@ import java.util.ArrayList;
 /**
  * Created by yuentung on 9/29/15.
  */
-public class TweetList implements MyObservable, MyObserver {
+public class TweetList { //implements MyObservable, MyObserver {
     private Tweet mostRecentTweet;
     private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 
     public void add(Tweet tweet) {
         mostRecentTweet = tweet;
         tweets.add(tweet);
-        notifyAllObservers();
+        //notifyAllObservers();
     }
 
     public Tweet getMostRecentTweet() {
@@ -37,7 +37,7 @@ public class TweetList implements MyObservable, MyObserver {
         observers.add((MyObserver) observer);
     }
 
-    public void notifyAllObservers(){
+    /*public void notifyAllObservers(){
         for (MyObserver observer : observers){
             observer.myNotify(this);
         }
@@ -45,6 +45,6 @@ public class TweetList implements MyObservable, MyObserver {
 
     public void myNotify(MyObservable observable){
         notifyAllObservers();
-    }
+    }*/
 }
 
