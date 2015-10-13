@@ -131,6 +131,40 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        //test that the tweet being shown on the edit screen is the tweet we clicked on
+        bodyText = activity.getBodyText();
+        assertEquals("hamburgers", bodyText);
+
+        //edit the text of that tweet
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                bodyText.setText("Tweet2");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        //save out edits
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        //assert that our edits were saved into the tweet correctly
+        Tweet tweet1 = (Tweet) oldTweetList.getItemAtPosition(0);
+        assertEquals("Tweet2", tweet1.getText());
+
+        //assert that our edits are shown on the screen to the user back in the main activity
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                View v = oldTweetList.getChildAt(0);
+                oldTweetList.performItemClick(v, 0, v.getId());
+                assertEquals("Tweet2", v);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
         //make sure close the eidt activity
         receiverActivity.finish();
     }
